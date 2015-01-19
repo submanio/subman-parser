@@ -15,7 +15,8 @@
             [subman-parser.sources.notabenoid :refer [notabenoid-source]]
             [subman-parser.sources.uksubtitles :refer [uksubtitles-source]]
             [subman-parser.sources.base :refer [download-enabled? get-subtitles
-                                                get-htmls-for-parse make-url]]))
+                                                get-htmls-for-parse make-url]])
+  (:gen-class))
 
 (defn inject!
   "Inject sources as a dependency."
