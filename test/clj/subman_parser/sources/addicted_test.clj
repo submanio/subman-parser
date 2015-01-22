@@ -16,16 +16,16 @@
 
 (def episode (get-from-file episode-file-name))
 
-(def release-urls ["http://www.addic7ed.com/serie/The_Following/2/4/Family_Affair"
-                   "http://www.addic7ed.com/serie/Midsomer_Murders/16/5/The_Killings_at_Copenhagen"
-                   "http://www.addic7ed.com/serie/Rick_and_Morty/1/1/Pilot"
-                   "http://www.addic7ed.com/serie/Lab_Rats_%28US%29/3/1/Sink_or_Swim"
-                   "http://www.addic7ed.com/serie/Lost_Girl/4/13/Dark_Horse"
-                   "http://www.addic7ed.com/serie/The_Walking_Dead/4/10/Inmates"
-                   "http://www.addic7ed.com/serie/Episodes/3/6/Episode_Six"
-                   "http://www.addic7ed.com/serie/Episodes/3/6/Episode_Six"
-                   "http://www.addic7ed.com/serie/The_Haunted_Hathaways/1/19/haunted_Crushing"
-                   "http://www.addic7ed.com/serie/The_Haunted_Hathaways/1/19/haunted_Crushing"])
+(def release-urls ["http://www.addic7ed.com/serie/American_Horror_Story/4/13/Curtain_Call"
+                   "http://www.addic7ed.com/serie/Star_Wars_REBELS/1/10/Idiot%27s_Array"
+                   "http://www.addic7ed.com/serie/American_Horror_Story/4/13/Curtain_Call"
+                   "http://www.addic7ed.com/serie/The_Game_%282014%29/1/5/Series_1%2C_Episode_5"
+                   "http://www.addic7ed.com/serie/Murdoch_Mysteries/8/11/All_That_Glitters"
+                   "http://www.addic7ed.com/serie/American_Horror_Story/4/13/Curtain_Call"
+                   "http://www.addic7ed.com/serie/Archer/6/2/Three_to_Tango"
+                   "http://www.addic7ed.com/serie/Arrow/3/10/Left_Behind"
+                   "http://www.addic7ed.com/serie/Person_of_Interest/4/12/Control-Alt-Delete"
+                   "http://www.addic7ed.com/serie/Resurrection_%282014%29/2/12/Steal_Away"])
 
 (deftest test-is-version-line?
   (testing "when version line passed"
@@ -37,7 +37,7 @@
 (deftest test-is-language-line?
   (testing "when language line passed"
     (is-do true? (#'addicted/is-language-line?
-                  (get-from-line "<td class='language'><a href='#'><b></b></a></td>"))))
+                   (get-from-line "<td class='language'><a href='#'><b></b></a></td>"))))
   (testing "when not"
     (is-do false? (#'addicted/is-language-line? (get-from-line "<td></td>")))))
 
@@ -76,8 +76,8 @@
        "http://www.addic7ed.com/log.php?mode=versions&page=1"))
 
 (deftest test-get-urls-from-list
-  (is= (addicted/get-urls-from-list release)
-       release-urls))
+  (is (= (addicted/get-urls-from-list release)
+         release-urls)))
 
 (deftest test-get-htmls-for-parse
   (with-redefs [helpers/fetch (fn [_] release)
@@ -87,24 +87,24 @@
                                   :content release-html}))))
 
 (deftest test-get-episode-name-string
-  (is= (addicted/get-episode-name-string episode)
-       "Raising Hope - 04x12 - Hot Dish"))
+  (is (= (addicted/get-episode-name-string episode)
+         "American Horror Story - 04x13 - Curtain Call")))
 
 (deftest test-get-episode-information
-  (is= (addicted/get-episode-information episode)
-       {:episode "12"
-        :name "Hot Dish"
-        :season "4"
-        :show "Raising Hope"}))
+  (is (= (addicted/get-episode-information episode)
+         {:episode "13"
+          :name "Curtain Call"
+          :season "4"
+          :show "American Horror Story"})))
 
 (deftest test-get-versions
   (testing "return all versions"
-    (is= 2 (count (#'addicted/get-versions episode))))
+    (is (= 1 (count (#'addicted/get-versions episode)))))
   (testing "return all languages"
-    (is= 3 (-> (#'addicted/get-versions episode)
-               first
-               :langs
-               count))))
+    (is (= 9 (-> (#'addicted/get-versions episode)
+                 first
+                 :langs
+                 count)))))
 
 (deftest test-get-version-langs
   (with-redefs [addicted/is-version-line? #(= % 1)
@@ -118,32 +118,67 @@
            :langs ["us"]}])))
 
 (deftest test-get-subtitles
-  (is= (addicted/get-subtitles episode-html "")
-       [{:episode "12"
-         :lang "Bulgarian"
-         :name "Hot Dish"
-         :season "4"
-         :show "Raising Hope"
-         :url "http://www.addic7ed.com/updated/35/83173/1"
-         :version "Version KILLERS, 0.00 MBs "}
-        {:episode "12"
-         :lang "French"
-         :name "Hot Dish"
-         :season "4"
-         :show "Raising Hope"
-         :url "http://www.addic7ed.com/updated/8/83173/1"
-         :version "Version KILLERS, 0.00 MBs "}
-        {:episode "12"
-         :lang "English"
-         :name "Hot Dish"
-         :season "4"
-         :show "Raising Hope"
-         :url "http://www.addic7ed.com/original/83173/1"
-         :version "Version KILLERS, 0.00 MBs "}
-        {:episode "12"
-         :lang "English"
-         :name "Hot Dish"
-         :season "4"
-         :show "Raising Hope"
-         :url "http://www.addic7ed.com/original/83173/0"
-         :version "Version KILLERS, 0.00 MBs "}]))
+  (is (= (addicted/get-subtitles episode-html "")
+         [{:episode "13"
+           :lang "Italian"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/original/96100/3"
+           :version nil}
+          {:episode "13"
+           :lang "Italian"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/original/96100/2"
+           :version nil}
+          {:episode "13"
+           :lang "French"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/updated/8/96100/1"
+           :version nil}
+          {:episode "13"
+           :lang "Portuguese (Brazilian)"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/updated/10/96100/1"
+           :version nil}
+          {:episode "13"
+           :lang "Bulgarian"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/updated/35/96100/1"
+           :version nil}
+          {:episode "13"
+           :lang "English"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/original/96100/1"
+           :version nil}
+          {:episode "13"
+           :lang "English"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/original/96100/0"
+           :version nil}
+          {:episode "13"
+           :lang "Dutch"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/original/96100/5"
+           :version nil}
+          {:episode "13"
+           :lang "Dutch"
+           :name "Curtain Call"
+           :season "4"
+           :show "American Horror Story"
+           :url "http://www.addic7ed.com/original/96100/4"
+           :version nil}])))
