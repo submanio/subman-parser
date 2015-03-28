@@ -26,7 +26,7 @@
 
 (def update-deep 10)
 
-(def update-period (* 5 60 1000))
+(def update-period (* 30 60 1000))
 
 (def crawl-period (* 24 60 60 1000))
 
@@ -44,4 +44,4 @@
 
 (def crawl-workers 1)
 
-(def crawl-limit 100000)
+(def crawl-limit 1000)
