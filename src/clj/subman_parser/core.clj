@@ -91,9 +91,10 @@
     (at-at/every const/update-period
                  #(future (load-new-subtitles))
                  pool)
-    (at-at/every const/crawl-period
-                 #(future (load-all))
-                 pool)))
+    ;(at-at/every const/crawl-period
+    ;             #(future (load-all))
+    ;             pool)
+    ))
 
 (defn -main
   [& _]
