@@ -6,7 +6,7 @@
             :dependencies [[org.clojure/clojure "1.6.0"]
                            [enlive "1.1.5"]
                            [clojurewerkz/elastisch "2.1.0"]
-                           [clj-http "1.0.1"]
+                           [clj-http "1.1.0"]
                            [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                            [overtone/at-at "1.2.0"]
                            [swiss-arrows "1.0.0"]
@@ -15,11 +15,9 @@
                            [org.clojure/tools.logging "0.3.1"]
                            [itsy "0.1.1"]
                            [clj-di "0.5.0"]
-                           [com.novemberain/monger "2.0.1"]
-                           [com.cemerick/piggieback "0.1.4"]]
-            :plugins [[lein-environ "1.0.0"]
-                      [lein-ancient "0.5.5"]
-                      [com.cemerick/clojurescript.test "0.3.3"]]  ; TODO: remove
+                           [com.novemberain/monger "2.1.0"]
+                           [com.cemerick/piggieback "0.1.5"]]
+            :plugins [[lein-environ "1.0.0"]]
             :profiles {:dev {:env {:is-debug true
                                    :ga-id ""
                                    :site-url "http://localhost:3000/"
